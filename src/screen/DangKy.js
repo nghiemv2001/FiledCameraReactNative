@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, TextInput, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, Image, TextInput, StyleSheet, Alert } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import React, {useState, useEffect} from 'react'
 import shareVarible from '../../AppContext'
@@ -19,72 +19,79 @@ const DangKy = ({navigation}) => {
   const [errormsg, setErrormsg] = useState(null)
 
   const FDangKy = ()=>{
-    // if (fdata.name == '') {
-    //   alert("Tên người dùng không thể để trống!")
-    //   return;
-    // }
-    // if ((!(/\S+@\S+\.\S+/).test(fdata.email) && !(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im).test(fdata.email))) {
-    //   alert("Email người dùng chưa đúng định dạng!")
-    //   return;
-    // }
-    // if (fdata.phone.length == 0) {
-    //   alert("Số điện thoại không thể để trống!")
-    //   return;
-    // }
-    // if(fdata.phone.length < 9 || fdata.phone.length > 11){
-    //   alert("Số điện thoại nhật vào không hợp lệ!")
-    // }
-    // if (fdata.phone.length != 0) {
-    //   for (const item of fdata.phone) {
-    //     if (item != '0' && item != '1' && item != '2' && item != '3' && item != '4' && item != '5' && item != '6' && item != '7' && item != '8' && item != '9') {
-    //       console.log(typeof(fdata.phone))
-    //       alert('Số điện thoại không chứa ký tự!');
-    //       return;
-    //     }
-    //   }
-    // }
-    // if (fdata.password.length < 6) {
-    //   alert("Mật khẩu mạnh đảm bảo trên 6 ký tự!")
-    //   return;
-    // }
-    // if (!(/^\S+$/).test(fdata.password)) {
-    //   alert("Mật khẩu mạnh đảm bảo không chưa khoảng trăng!")
-    //   return;
-    // }
-    // if (!(/^(?=.*[A-Z]).*$/).test(fdata.password)) {
-    //   alert("Mật khẩu mạnh đảm bảo chứa ít nhất 1 ký tự in hoa!")
-    //   return;
-    // }
-    // if (!(/^(?=.*[a-z]).*$/).test(fdata.password)) {
-    //   alert("Mật khẩu mạnh đảm bảo chứa ít nhất 1 ký tự thường!")
-    //   return;
-    // }
-    // if (!(/^(?=.*[0-9]).*$/).test(fdata.password)) {
-    //   alert("Mật khẩu mạnh đảm bảo chứa ít nhất 1 số!")
-    //   return;
-    // }
-    // if(fdata.password != fpassword.confirmpass){
-    //   alert("Xác nhận mật khẩu chưa chính xác!")
-    //   return;
-    // }
-    fetch(shareVarible.URLink + '/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(fdata)
-    })
-      .then(res => res.json()).then(
-        data => {
-          if (data.error) {
-            setErrormsg(data.error);
-          }
-          else {
-            alert('Đăng ký tài khoản thành công');
-            navigation.navigate('DangNhap');
-          }
+    if (fdata.name == '') {
+      alert("Tên người dùng không thể để trống!")
+      return;
+    }
+    if ((!(/\S+@\S+\.\S+/).test(fdata.email) && !(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im).test(fdata.email))) {
+      alert("Email người dùng chưa đúng định dạng!")
+      return;
+    }
+    if (fdata.phone.length == 0) {
+      alert("Số điện thoại không thể để trống!")
+      return;
+    }
+    if(fdata.phone.length < 9 || fdata.phone.length > 11){
+      alert("Số điện thoại nhật vào không hợp lệ!")
+    }
+    if (fdata.phone.length != 0) {
+      for (const item of fdata.phone) {
+        if (item != '0' && item != '1' && item != '2' && item != '3' && item != '4' && item != '5' && item != '6' && item != '7' && item != '8' && item != '9') {
+          console.log(typeof(fdata.phone))
+          alert('Số điện thoại không chứa ký tự!');
+          return;
         }
-      )
+      }
+    }
+    if (fdata.password.length < 6) {
+      alert("Mật khẩu mạnh đảm bảo trên 6 ký tự!")
+      return;
+    }
+    if (!(/^\S+$/).test(fdata.password)) {
+      alert("Mật khẩu mạnh đảm bảo không chưa khoảng trăng!")
+      return;
+    }
+    if (!(/^(?=.*[A-Z]).*$/).test(fdata.password)) {
+      alert("Mật khẩu mạnh đảm bảo chứa ít nhất 1 ký tự in hoa!")
+      return;
+    }
+    if (!(/^(?=.*[a-z]).*$/).test(fdata.password)) {
+      alert("Mật khẩu mạnh đảm bảo chứa ít nhất 1 ký tự thường!")
+      return;
+    }
+    if (!(/^(?=.*[0-9]).*$/).test(fdata.password)) {
+      alert("Mật khẩu mạnh đảm bảo chứa ít nhất 1 số!")
+      return;
+    }
+    if(fdata.password != fpassword.confirmpass){
+      alert("Xác nhận mật khẩu chưa chính xác!")
+      return;
+    }
+    Alert.alert('Điều khoản', 'Bạn nên cam kết các phản ánh của bạn là hoàn toàn đúng sự thật, nếu không bạn có thể bị truy cứu về mức pháp lý hoặc hình sự nếu có bất kỳ thông tin ngụy tạo nào.', [
+      {
+        text: 'không',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'chấp nhận', onPress: () =>fetch(shareVarible.URLink + '/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(fdata)
+      })
+        .then(res => res.json()).then(
+          data => {
+            if (data.error) {
+              setErrormsg(data.error);
+            }
+            else {
+              alert('Đăng ký tài khoản thành công');
+              navigation.navigate('DangNhap');
+            }
+          }
+        ) },
+    ]);
   }
   return (
     <KeyboardAwareScrollView style={styles.container}>

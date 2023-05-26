@@ -13,38 +13,49 @@ import TrangChuQuanLi from './src/screen/QuanLi/TrangChuQuanLi';
 //nguoidung
 import TrangChuNguoiDung from './src/screen/NguoiDung/TrangChuNguoiDung';
 import PhanAnh from './src/screen/NguoiDung/PhanAnh';
+import TinTuc from './src/screen/NguoiDung/TinTuc';
+import MapGG from './src/screen/NguoiDung/MapGG'
+import { AddressProvider } from './src/component/AddressContext';
 const Stack = createNativeStackNavigator();
 export default function App() {
-  
+
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-      <Stack.Screen name="PhanAnh" component={PhanAnh} options={{
-          headerShown: false
-        }} />
-        <Stack.Screen name="ManHinhCho" component={ManHinhCho} options={{
-          headerShown: false
-        }} /> 
-        <Stack.Screen name="TrangCaNhan" component={TrangCaNhan} options={{
-          headerShown: false
-        }} />
-        <Stack.Screen name="DangKy" component={DangKy} options={{
-          headerShown: false
-        }} />
-        <Stack.Screen name="DangNhap" component={DangNhap} options={{
-          headerShown: false
-        }} />
-        <Stack.Screen name="TrangChuAdmin" component={TrangChuAdmin} options={{
-          headerShown: false
-        }} />
-        <Stack.Screen name="TrangChuQuanLi" component={TrangChuQuanLi} options={{
-          headerShown: false
-        }} />
-        <Stack.Screen name="TrangChuNguoiDung" component={TrangChuNguoiDung} options={{
-          headerShown: false
-        }} />
-        
-      </Stack.Navigator>
+      <AddressProvider>
+        <Stack.Navigator>
+          <Stack.Screen name="TrangChuNguoiDung" component={TrangChuNguoiDung} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="DangNhap" component={DangNhap} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="PhanAnh" component={PhanAnh} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="ManHinhCho" component={ManHinhCho} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="TrangCaNhan" component={TrangCaNhan} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="DangKy" component={DangKy} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="TrangChuAdmin" component={TrangChuAdmin} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="TrangChuQuanLi" component={TrangChuQuanLi} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="TinTuc" component={TinTuc} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="MapGG" component={MapGG} options={{
+            headerShown: false
+          }} />
+
+        </Stack.Navigator>
+      </AddressProvider>
     </NavigationContainer>
   );
 }
