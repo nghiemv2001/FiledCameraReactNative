@@ -1,24 +1,33 @@
 import { View, Text, TouchableOpacity, Image, TextInput, StyleSheet, Alert } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import shareVarible from '../../AppContext'
-
-const DangKy = ({navigation}) => {
-  const [fdata , SetFDaTa] = useState({
-    name : "",
-    phone :"",
-    email:"",
+import Ionicons from 'react-native-vector-icons/Ionicons'
+const DangKy = ({ navigation }) => {
+  const [fdata, SetFDaTa] = useState({
+    name: "",
+    phone: "",
+    email: "",
     password: "",
-    role :"3",
+    role: "3",
     keycode: "0000",
     image: "https://res.cloudinary.com/dmsgfvp0y/image/upload/v1684391380/trangcanhan_inwrjo.png"
   })
   const [fpassword, SetFPassword] = useState({
-    confirmpass:""
+    confirmpass: ""
   })
   const [errormsg, setErrormsg] = useState(null)
-
-  const FDangKy = ()=>{
+  //Password
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+  const [confirmpasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const toggleConfirmPasswordVisibility = () => {
+    setConfirmPasswordVisible(!confirmpasswordVisible);
+  };
+  ////////
+  const FDangKy = () => {
     if (fdata.name == '') {
       alert("Tên người dùng không thể để trống!")
       return;
@@ -31,13 +40,13 @@ const DangKy = ({navigation}) => {
       alert("Số điện thoại không thể để trống!")
       return;
     }
-    if(fdata.phone.length < 9 || fdata.phone.length > 11){
+    if (fdata.phone.length < 9 || fdata.phone.length > 11) {
       alert("Số điện thoại nhật vào không hợp lệ!")
     }
     if (fdata.phone.length != 0) {
       for (const item of fdata.phone) {
         if (item != '0' && item != '1' && item != '2' && item != '3' && item != '4' && item != '5' && item != '6' && item != '7' && item != '8' && item != '9') {
-          console.log(typeof(fdata.phone))
+          console.log(typeof (fdata.phone))
           alert('Số điện thoại không chứa ký tự!');
           return;
         }
@@ -63,34 +72,34 @@ const DangKy = ({navigation}) => {
       alert("Mật khẩu mạnh đảm bảo chứa ít nhất 1 số!")
       return;
     }
-    if(fdata.password != fpassword.confirmpass){
+    if (fdata.password != fpassword.confirmpass) {
       alert("Xác nhận mật khẩu chưa chính xác!")
       return;
     }
-    Alert.alert('Điều khoản', 'Bạn nên cam kết các phản ánh của bạn là hoàn toàn đúng sự thật, nếu không bạn có thể bị truy cứu về mức pháp lý hoặc hình sự nếu có bất kỳ thông tin ngụy tạo nào.', [
+    Alert.alert('Điều khoản', 'Bạn cần cam kết các điều sau đây!\n\n1. Thông tin cung cấp là hoàn toàn đúng sự thật.\n2. Chịu hoàn toàn trách nhiệm về pháp luật nếu thông tin cung cấp là không chính xác.\n3. Khuyến kích bạn có thể cung cấp thông tin một cách chi tiết nhất.\n\nVui lòng đọc kĩ & chân thành cảm ơn.', [
       {
-        text: 'không',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
+        text: 'không'
       },
-      {text: 'chấp nhận', onPress: () =>fetch(shareVarible.URLink + '/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(fdata)
-      })
-        .then(res => res.json()).then(
-          data => {
-            if (data.error) {
-              setErrormsg(data.error);
+      {
+        text: 'Đồng ý', onPress: () => fetch(shareVarible.URLink + '/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(fdata)
+        })
+          .then(res => res.json()).then(
+            data => {
+              if (data.error) {
+                setErrormsg(data.error);
+              }
+              else {
+                alert('Đăng ký tài khoản thành công');
+                navigation.navigate('DangNhap');
+              }
             }
-            else {
-              alert('Đăng ký tài khoản thành công');
-              navigation.navigate('DangNhap');
-            }
-          }
-        ) },
+          )
+      },
     ]);
   }
   return (
@@ -102,33 +111,60 @@ const DangKy = ({navigation}) => {
       <Text style={{ fontSize: 36, fontWeight: 'bold', marginLeft: 123, marginTop: -78 }}>PHẢN ẢNH</Text>
       <Text style={{ fontSize: 32, fontWeight: '400', marginLeft: 190 }}>HIỆN TRƯỜNG</Text>
       <View style={{ alignItems: 'center' }}>
-      <Text style={{ fontSize: 13, marginRight: 210,marginTop:20 }}>Tên người dùng</Text>
-        <TextInput style={{ height: 40, width: 300, borderWidth: 1, borderRadius: 20, marginTop: 10, paddingLeft: 10 }}
-        onPressIn={() => setErrormsg(null)}
-        onChangeText={(text) => SetFDaTa({ ...fdata, name: text })}
+        <Text style={{ fontSize: 13, marginRight: 210, marginTop: 20 }}>Tên người dùng</Text>
+        <TextInput style={{ height: 40, width: 300, borderWidth: 1, borderRadius: 20, paddingLeft: 10 }}
+          onPressIn={() => setErrormsg(null)}
+          onChangeText={(text) => SetFDaTa({ ...fdata, name: text })}
         ></TextInput>
-        <Text style={{ fontSize: 13, marginRight: 260 }}>Email</Text>
-        <TextInput style={{ height: 40, width: 300, borderWidth: 1, borderRadius: 20, marginTop: 10,paddingLeft: 10 }}
-        onPressIn={() => setErrormsg(null)}
-        onChangeText={(text) => SetFDaTa({ ...fdata, email: text })}
+        <Text style={{ fontSize: 13, marginRight: 260, marginTop: 10 }}>Email</Text>
+        <TextInput style={{ height: 40, width: 300, borderWidth: 1, borderRadius: 20, paddingLeft: 10 }}
+          onPressIn={() => setErrormsg(null)}
+          onChangeText={(text) => SetFDaTa({ ...fdata, email: text })}
         ></TextInput>
-        <Text style={{ fontSize: 13, marginRight: 210 }}>Số điện thoại</Text>
-        <TextInput style={{ height: 40, width: 300, borderWidth: 1, borderRadius: 20, marginTop: 10,paddingLeft: 10 }}
-        onPressIn={() => setErrormsg(null)}
-        onChangeText={(text) => SetFDaTa({ ...fdata, phone: text })}
+        <Text style={{ fontSize: 13, marginRight: 210, marginTop: 10 }}>Số điện thoại</Text>
+        <TextInput style={{ height: 40, width: 300, borderWidth: 1, borderRadius: 20, paddingLeft: 10 }}
+          onPressIn={() => setErrormsg(null)}
+          onChangeText={(text) => SetFDaTa({ ...fdata, phone: text })}
         ></TextInput>
-        <Text style={{ fontSize: 13, marginRight: 240 }}>Mật khẩu</Text>
-        <TextInput style={{ height: 40, width: 300, borderWidth: 1, borderRadius: 20, marginTop: 10,paddingLeft: 10 }}
-        onPressIn={() => setErrormsg(null)}
-        onChangeText={(text) => SetFDaTa({ ...fdata, password: text })}
-        ></TextInput>
-        <Text style={{ fontSize: 13, marginRight: 180 }}>Xác nhận mật khẩu</Text>
-        <TextInput style={{ height: 40, width: 300, borderWidth: 1, borderRadius: 20, marginTop: 10,paddingLeft: 10 }}
-        onPressIn={() => setErrormsg(null)}
-        onChangeText={(text) => SetFPassword({ ...fpassword, confirmpass: text })}
-        ></TextInput>
+        <Text style={{ fontSize: 13, marginRight: 240, marginTop: 10 }}>Mật khẩu</Text>
+        <View style={{ flexDirection: 'row', height: 40, width: 300, borderWidth: 1, borderRadius: 20, paddingLeft: 10 }}>
+          <TextInput style={{ height: 40, width: 250, paddingLeft: 10 }}
+            onPressIn={() => setErrormsg(null)}
+            secureTextEntry={!passwordVisible}
+            onChangeText={(text) => SetFDaTa({ ...fdata, password: text })}
+          > </TextInput><TouchableOpacity
+            style={{ marginTop: 7 }}
+            onPress={togglePasswordVisibility}
+          >
+            <Ionicons
+              name={passwordVisible ? 'eye-outline' : 'eye-off-outline'}
+              size={24}
+              color="gray"
+            />
+          </TouchableOpacity>
+        </View>
+
+        <Text style={{ fontSize: 13, marginRight: 180, marginTop: 10 }}>Xác nhận mật khẩu</Text>
+        <View style={{ flexDirection: 'row', height: 40, width: 300, borderWidth: 1, borderRadius: 20, paddingLeft: 10 }}>
+          <TextInput style={{ height: 40, width: 250, paddingLeft: 10 }}
+            onPressIn={() => setErrormsg(null)}
+            secureTextEntry={!confirmpasswordVisible}
+            onChangeText={(text) => SetFPassword({ ...fpassword, confirmpass: text })}
+          ></TextInput>
+          <TouchableOpacity
+            style={{ marginTop: 7 }}
+            onPress={toggleConfirmPasswordVisibility}
+          >
+            <Ionicons
+              name={confirmpasswordVisible ? 'eye-outline' : 'eye-off-outline'}
+              size={24}
+              color="gray"
+            />
+          </TouchableOpacity>
+        </View>
+
         <TouchableOpacity onPress={() => navigation.navigate('DangNhap')}>
-          <Text style={{marginLeft: 190, marginTop: 5, color:'red'}}>Đã có tài khoản</Text>
+          <Text style={{ marginLeft: 190, marginTop: 5, color: 'red' }}>Đã có tài khoản</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => FDangKy()}>
           <Text style={{ height: 50, width: 250, backgroundColor: '#81F0FF', marginTop: 15, borderRadius: 40, textAlign: 'center', textAlignVertical: 'center', fontSize: 28, fontWeight: 'bold' }}>Đăng ký</Text>

@@ -39,7 +39,7 @@ const PhanAnh = ({ navigation }) => {
   const TaoPhanAnh = () => {
     const now = new Date();
     fdata.phut = now.getMinutes();
-    fdata.gio = now.getHours;
+    fdata.gio = now.getHours();
     fdata.ngay = now.getDate();
     fdata.thang = now.getMonth()+ 1;
     fdata.nam = now.getFullYear();
@@ -91,7 +91,6 @@ const PhanAnh = ({ navigation }) => {
                   }
                 }
               )
-
         },
       ]);
     }
@@ -262,7 +261,7 @@ const PhanAnh = ({ navigation }) => {
             </TouchableOpacity>
             <Text style={{ fontSize: 18, paddingTop: 5, marginLeft: -25 }}>Vị trí hiện tại</Text>
             <TouchableOpacity onPress={openMap}>
-              <Ionicons name="md-image" size={35} />
+              <Ionicons name="map" size={35} />
             </TouchableOpacity>
 
             <Text style={{ fontSize: 18, paddingTop: 5, marginLeft: -25 }}>Mở bản đồ</Text>

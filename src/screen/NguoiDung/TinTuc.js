@@ -25,14 +25,28 @@ const TinTuc = () => {
   const renderlist = ((item) => {
     return (
       <View style={{
-        height: 200, width: '100%', backgroundColor: 'red', borderBottomWidth: 10
+        height: 200, width: '100%', backgroundColor: 'white', borderBottomWidth: 10, justifyContent: 'center', alignItems: 'center'
       }}>
-        <Image style={{height: '100%', width: '100%'}}  source={{ uri: item.hinhanh }}/>
-        <View style={{height: 100, width: 200, marginLeft: 230, marginTop: 90, borderTopLeftRadius: 30, zIndex: 1, position:'absolute', backgroundColor:'white'}}>
-          <Text style={{fontSize: 16, fontWeight: 'bold', padding: 10, paddingRight: 18}} multiline={true}>{item.noidung}</Text>
-          <Text style={{fontSize: 16, fontWeight: 'bold', paddingHorizontal: 10}} multiline={true}>{item.vitri}</Text>
-          <Text style={{fontSize: 16, fontWeight: 'bold', padding: 10, paddingRight: 18}} multiline={true}>{item.noidung}</Text>
-          <Text style={{fontSize: 16, fontWeight: 'bold', padding: 10, paddingRight: 18}} multiline={true}>{item.noidung}</Text>
+        <Image style={{height: '60%', width: '90%', borderRadius: 30, marginBottom:0}}  source={{ uri: item.hinhanh }}/>
+        <View style={{height: 50, width: '90%', borderTopLeftRadius: 30}}>
+          <View style={{flexDirection:'row'}}>
+            <Text>Nội dung: </Text>
+          <Text numberOfLines={1}>{item.noidung}</Text>
+          </View>
+          <View style={{flexDirection:'row'}}>
+            <Text >Vị trí: </Text>
+          <Text numberOfLines={1}>{item.vitri}</Text>
+          </View>
+          <View style={{flexDirection:'row'}}>
+            <Text>Ngày đăng: </Text>
+          <Text numberOfLines={1}>{item.ngay}/{item.thang}/{item.nam}</Text>
+          
+          </View>
+          {
+            (item.trangthai == 1|| item.trangthai == 0) 
+            ? <Text style={{position: 'absolute', zIndex: 1, paddingLeft:270, marginTop: 37, color: 'red'}}>Chưa xử lí</Text> 
+            :<Text style={{position: 'absolute', zIndex: 1, paddingLeft:270, marginTop: 37, color: '#E49C3C'}}>Đang xử lí</Text>
+          }
         </View>
       </View>
 

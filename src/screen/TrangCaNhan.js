@@ -82,7 +82,6 @@ const TrangCaNhan = ({navigation, route}) => {
             style={{ justifyContent: 'center', alignItems: 'center' }}>
                 <Ionicons name='md-home' size={55}></Ionicons>
             </TouchableOpacity>
-
         </View>
     )
 }

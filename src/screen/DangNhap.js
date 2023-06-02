@@ -43,15 +43,16 @@ const DangNHap = ({ navigation}) => {
       <Text style={{ fontSize: 32, fontWeight: '400', marginLeft: 190 }}>HIỆN TRƯỜNG</Text>
       <Image style={{ height: 245, width: '100%' }} source={img_dangnhap}></Image>
       <View style={{ alignItems: 'center' }}>
-        <Text style={{ fontSize: 13, marginRight: 260 }}>Email</Text>
-        <TextInput style={{ height: 40, width: 300, borderWidth: 1, borderRadius: 20, marginTop: 10, paddingLeft: 10 }}
+        <Text style={{ fontSize: 13, marginRight: 260, marginTop : 10 }}>Email</Text>
+        <TextInput style={{ height: 40, width: 300, borderWidth: 1, borderRadius: 20, marginTop: 0, paddingLeft: 10 }}
           onPressIn={() => setErrormsg(null)}
           value={fdata.email}
           onChangeText={(text) => SetFDaTa({ ...fdata, email: text })}
         ></TextInput>
-        <Text style={{ fontSize: 13, marginRight: 240 }}>Mật khẩu</Text>
-        <TextInput style={{ height: 40, width: 300, borderWidth: 1, borderRadius: 20, marginTop: 10, paddingLeft: 10 }}
+        <Text style={{ fontSize: 13, marginRight: 240, marginTop: 10 }}>Mật khẩu</Text>
+        <TextInput style={{ height: 40, width: 300, borderWidth: 1, borderRadius: 20, marginTop: 0, paddingLeft: 10 }}
           onPressIn={() => setErrormsg(null)}
+          secureTextEntry
           value={fdata.password}
           onChangeText={(text) => SetFDaTa({ ...fdata, password: text })}
         ></TextInput>
