@@ -2,11 +2,17 @@ import { View, Text, StyleSheet, TextInput, Image, TouchableOpacity, FlatList, A
 import React, { useState, useEffect } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import shareVarible from '../../../AppContext'
-const PhanAnhDaXuLi = () => {
+import { useFocusEffect } from '@react-navigation/native'
+const PhanAnhDaXuLi = ({ navigation }) => {
   const [danhsachPhanAnh, SetDanhSachPhanAnh] = useState(null);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchData();
+    }, [])
+  );
   //test data 
   const fetchData = () => {
-    fetch(shareVarible.URLink + '/PhanAnhDangXuLi/ ', {
+    fetch(shareVarible.URLink + '/PhanAnhHoanThanh/ ', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -23,9 +29,6 @@ const PhanAnhDaXuLi = () => {
     console.log(danhsachPhanAnh)
   }, []);
   const renderlist = ((item) => {
-    if (item.trangthai === 0 || item.trangthai === 1|| item.trangthai === 2 ) {
-      return null; // If trangthai is 0, return null to skip rendering this item
-    }
     return (
       <View style={{
         height: 200, width: '100%', backgroundColor: 'white', borderBottomWidth: 10, justifyContent: 'center', alignItems: 'center'
@@ -40,9 +43,15 @@ const PhanAnhDaXuLi = () => {
             <Text >Vị trí: </Text>
             <Text numberOfLines={1}>{item.vitri}</Text>
           </View>
-          <View style={{ flexDirection: 'row' }}>
-            <Text>Ngày : </Text>
-            <Text numberOfLines={1}>{item.ngay}/{item.thang}/{item.nam}</Text>
+          <View style={{ flexDirection: 'row', width: '100%' , justifyContent : 'space-between'}}>
+            <View style={{ width: '50%' }}>
+              <Text numberOfLines={1}>Thời gian xử lí : {item.thoigianxuli}</Text>
+            </View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ThongTinPhanAnh', { item: item })}
+              style={{ marginLeft: 90, width: '50%' }}>
+              <Text style={{ color: "#0000F7" }}>Xem chi tiết....</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -51,7 +60,7 @@ const PhanAnhDaXuLi = () => {
   return (
     <View style={{ width: '100%', height: '100%' }}>
       <FlatList
-       style={{marginTop: 10}}
+        style={{ marginTop: 10 }}
         data={danhsachPhanAnh}
         renderItem={({ item }) => {
           return renderlist(item)

@@ -8,6 +8,7 @@ import CheckBox from 'expo-checkbox';
 import { AddressContext } from './../../component/AddressContext';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
+import { cos } from 'react-native-reanimated';
 // Trong component PhanAnh
 const ThongTinPhanAnh = ({ navigation, route }) => {
   const LayThongTin = (type) => {
@@ -37,6 +38,8 @@ const ThongTinPhanAnh = ({ navigation, route }) => {
           return route.params.item.thang
         case "nam":
           return route.params.item.nam
+        case "thoigianxuli":
+          return route.params.item.thoigianxuli
       }
     }
     return ""
@@ -54,6 +57,7 @@ const ThongTinPhanAnh = ({ navigation, route }) => {
     ngay: LayThongTin('ngay'),
     thang: LayThongTin("thang"),
     nam: LayThongTin("nam"),
+    thoigianxuli: LayThongTin("thoigianxuli"),
   })
   console.log(fdata)
   const { currentAddress, currentLatitude, currentLongitude, setCoordinates, setAddress } = useContext(AddressContext);
@@ -147,12 +151,17 @@ const ThongTinPhanAnh = ({ navigation, route }) => {
             alert(data.error);
           }
           else {
-            alert('Thành công!');
+            Alert.alert('Thông báo','Thành công !')
             navigation.navigate('QuanLi')
           }
         }
       )
   }
+  //
+    const XacNhanHoanThanhPhanAnh= () =>{
+      console.log('a')
+    }
+   
   return (
     <View style={{ backgroundColor: "#B0EDF5" }}>
       <KeyboardAwareScrollView style={{ height: "100%", width: "100%" }}>
@@ -171,8 +180,12 @@ const ThongTinPhanAnh = ({ navigation, route }) => {
             <Text style={{ fontSize: 18, fontWeight: '500', flexShrink: 1 }} numberOfLines={1} ellipsizeMode="tail">{fdata.vitri}</Text>
           </View>
           <View style={{ flexDirection: 'row', marginTop: 5, paddingLeft: 10 }}>
-            <Text style={{ fontSize: 18, fontWeight: '500' }}>Thời gian: </Text>
-            <Text style={{ fontSize: 18, fontWeight: '500', flexShrink: 1 }} numberOfLines={1} ellipsizeMode="tail">{fdata.gio}h{fdata.phut}' - {fdata.ngay}/{fdata.thang}/{fdata.nam}</Text>
+            {
+              (fdata.trangthai == 3) 
+              ? <Text style={{ fontSize: 18, fontWeight: '500', flexShrink: 1 }}ellipsizeMode="tail">Thời gian xử lí: {fdata.thoigianxuli}</Text>
+              :
+              <Text style={{ fontSize: 18, fontWeight: '500', flexShrink: 1 }}ellipsizeMode="tail">Thời gian: {fdata.gio}h{fdata.phut}' - {fdata.ngay}/{fdata.thang}/{fdata.nam}</Text>
+            }
           </View>
           <Text style={{ marginTop: 10, paddingLeft: 10 }}>bản đồ</Text>
           <View style={{ height: 190, width: 390, marginLeft: 10 }}>
@@ -191,11 +204,22 @@ const ThongTinPhanAnh = ({ navigation, route }) => {
           </View>
           <Text style={{ marginTop: 10, paddingLeft: 10 }}>ảnh minh họa</Text>
           <Image style={{ height: '60%', width: '90%', borderRadius: 30, marginBottom: 0, borderWidth: 1, height: 190, width: 390, marginLeft: 10 }} source={{ uri: fdata.hinhanh }} />
-          <TouchableOpacity
+          {
+            (fdata.trangthai === 1 || fdata.trangthai === 0) ? 
+            <TouchableOpacity
             onPress={() => XacNhanPhanAnh()}
             style={{ justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: 10 }}>
             <Text style={{ height: 50, width: 300, textAlign: 'center', fontSize: 22, backgroundColor: 'white', textAlignVertical: 'center', borderRadius: 12, fontWeight: '500' }}>XỬ LÍ</Text>
           </TouchableOpacity>
+          : (fdata.trangthai === 2) ?
+          <TouchableOpacity
+            onPress={() => XacNhanHoanThanhPhanAnh()}
+            style={{ justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: 10 }}>
+            <Text style={{ height: 50, width: 300, textAlign: 'center', fontSize: 22, backgroundColor: 'white', textAlignVertical: 'center', borderRadius: 12, fontWeight: '500' }}>HOÀN THÀNH</Text>
+          </TouchableOpacity>
+          : null
+          }
+          
         </ScrollView>
       </KeyboardAwareScrollView>
 

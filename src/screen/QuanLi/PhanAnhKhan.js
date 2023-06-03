@@ -51,7 +51,7 @@ const PhanAnhKhan = ({navigation}) => {
             <Text numberOfLines={1}>{item.gio}h{item.phut}' - {item.ngay}/{item.thang}/{item.nam}</Text>
             <TouchableOpacity style={{marginLeft: 100}}
             onPress={() => navigation.navigate('ThongTinPhanAnh', {item: item})}>
-              <Text style={{color: "#0000F7"}}>Xem chi tiết....</Text>
+              <Text style={{color: "red"}}>Xem chi tiết....</Text>
             </TouchableOpacity>            
           </View>
         </View>

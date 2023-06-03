@@ -45,12 +45,12 @@ const PhanAnhDangXuLi = ({navigation}) => {
             <Text numberOfLines={1}>{item.vitri}</Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={{ color: '#E49C3C' }}>Ngày xử lí: </Text>
-            <Text numberOfLines={1} style={{ color: '#E49C3C' }}>{item.ngay}/{item.thang}/{item.nam}</Text>
+            <Text >Ngày xử lí: </Text>
+            <Text numberOfLines={1}>{item.ngay}/{item.thang}/{item.nam}</Text>
             <TouchableOpacity 
              onPress={() => navigation.navigate('ThongTinPhanAnh', {item: item})}
             style={{ marginLeft: 140 }}>
-              <Text style={{ color: "#0000F7" }}>Xem chi tiết....</Text>
+              <Text style={{ color: '#E49C3C' }}>Xem chi tiết....</Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -2,8 +2,14 @@ import { View, Text, StyleSheet, TextInput, Image, TouchableOpacity, FlatList, A
 import React, { useState, useEffect } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import shareVarible from '../../../AppContext'
+import { useFocusEffect } from '@react-navigation/native'
 const PhanAnhChuaXuLi = ({navigation}) => {
   const [danhsachPhanAnh, SetDanhSachPhanAnh] = useState(null);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchData();
+    }, [])
+  );
   //test data 
   const fetchData = () => {
     fetch(shareVarible.URLink + '/PhanAnh/ ', {
@@ -46,7 +52,7 @@ const PhanAnhChuaXuLi = ({navigation}) => {
             <TouchableOpacity 
             onPress={() => navigation.navigate('ThongTinPhanAnh', {item: item})}
             style={{marginLeft: 140}}>
-              <Text style={{color: "#0000F7"}}>Xem chi tiết....</Text>
+              <Text style={{color: "red"}}>Xem chi tiết....</Text>
             </TouchableOpacity>
           </View>
         </View>
