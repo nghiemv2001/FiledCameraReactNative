@@ -37,7 +37,7 @@ const TrangCaNhan = ({navigation, route}) => {
             navigation.navigate('TrangChuAdmin')
         }
         else if(dataAPI.role === "2"){
-            navigation.navigate('TrangChuQuanLi')
+            navigation.navigate('QuanLi')
         }
         else{
             navigation.navigate('TrangChuNguoiDung')

@@ -270,10 +270,10 @@ const PhanAnh = ({ navigation }) => {
           <Text style={{ marginLeft: 40, fontSize: 19, marginBottom: -15, marginTop: 20 }}>
             Đính kèm hình ảnh(*)
           </Text>
-          <View style={{ height: 150, width: "100%", marginTop: 10, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+          <View style={{ height: 150, width: "100%", marginTop: 40, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
             {
-              fdata.hinhanh != "" ? <Image style={{ height: 130, width: "55%", borderRadius: 20 }} source={{ uri: image }} />
-                : <Text style={{ height: 130, width: "55%", borderWidth: 1, borderRadius: 20 }}></Text>
+              fdata.hinhanh != "" ? <Image style={{ height: 190, width: "70%", borderWidth: 1, borderRadius: 20 }} source={{ uri: image }} />
+                : <Text style={{ height: 190, width: "70%", borderWidth: 1, borderRadius: 20 }}></Text>
             }
             <View style={{ marginLeft: 20 }}>
               <TouchableOpacity onPress={pickImage}>

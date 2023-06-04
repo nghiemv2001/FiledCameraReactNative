@@ -26,23 +26,21 @@ export default function App() {
     <NavigationContainer>
       <AddressProvider>
         <Stack.Navigator>
-        <Stack.Screen name="QuanLi" component={QuanLi} options={{
+        <Stack.Screen name="DangNhap" component={DangNhap} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="QuanLi" component={QuanLi} options={{
             headerShown: false
           }} />
           <Stack.Screen name="PhanAnh" component={PhanAnh} options={{
             headerShown: false
           }} />
-          
-          <Stack.Screen name="DangNhap" component={DangNhap} options={{
+          <Stack.Screen name="TrangChuQuanLi" component={TrangChuQuanLi} options={{
             headerShown: false
           }} />
-         <Stack.Screen name="TrangChuQuanLi" component={TrangChuQuanLi} options={{
-            headerShown: false
-          }} />  
           <Stack.Screen name="TrangChuNguoiDung" component={TrangChuNguoiDung} options={{
             headerShown: false
           }} />
-          
           <Stack.Screen name="ManHinhCho" component={ManHinhCho} options={{
             headerShown: false
           }} />

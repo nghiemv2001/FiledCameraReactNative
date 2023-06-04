@@ -6,16 +6,16 @@ const TinTuc = () => {
   const [danhsachPhanAnh, SetDanhSachPhanAnh] = useState(null);
   //test data 
   const fetchData = () => {
-    fetch(shareVarible.URLink + '/PhanAnh/ ', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(data => SetDanhSachPhanAnh(data),
-      )
+    Promise.all([
+      fetch(shareVarible.URLink + '/PhanAnh/'),
+      fetch(shareVarible.URLink + '/PhanAnhDangXuLi/'),
+      fetch(shareVarible.URLink + '/PhanAnhHoanThanh/')
+    ])
+      .then(responses => Promise.all(responses.map(response => response.json())))
+      .then(data => {
+        const mergedData = data[0].concat(data[1], data[2]); // Gộp danh sách thành một danh sách duy nhất
+        SetDanhSachPhanAnh(mergedData);
+      })
       .catch(error => console.log(error));
   };
   useEffect(() => {
@@ -40,12 +40,12 @@ const TinTuc = () => {
           <View style={{flexDirection:'row'}}>
             <Text>Ngày đăng: </Text>
           <Text numberOfLines={1}>{item.ngay}/{item.thang}/{item.nam}</Text>
-          
           </View>
           {
             (item.trangthai == 1|| item.trangthai == 0) 
-            ? <Text style={{position: 'absolute', zIndex: 1, paddingLeft:270, marginTop: 37, color: 'red'}}>Chưa xử lí</Text> 
-            :<Text style={{position: 'absolute', zIndex: 1, paddingLeft:270, marginTop: 37, color: '#E49C3C'}}>Đang xử lí</Text>
+            ? <Text style={{position: 'absolute', zIndex: 1, paddingLeft:280, marginTop: 37, color: 'red'}}>Chưa xử lí</Text> 
+            : (item.trangthai == 2) ? <Text style={{position: 'absolute', zIndex: 1, paddingLeft:280, marginTop: 37, color: '#E49C3C'}}>Đang xử lí</Text>
+            :<Text style={{position: 'absolute', zIndex: 1, paddingLeft:280, marginTop: 37, color: 'green'}}>Đã xử lí</Text>
           }
         </View>
       </View>

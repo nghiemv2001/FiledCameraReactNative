@@ -44,12 +44,12 @@ const PhanAnhDaXuLi = ({ navigation }) => {
             <Text numberOfLines={1}>{item.vitri}</Text>
           </View>
           <View style={{ flexDirection: 'row', width: '100%' , justifyContent : 'space-between'}}>
-            <View style={{ width: '50%' }}>
+            <View style={{ width: '75%' }}>
               <Text numberOfLines={1}>Thời gian xử lí : {item.thoigianxuli}</Text>
             </View>
             <TouchableOpacity
               onPress={() => navigation.navigate('ThongTinPhanAnh', { item: item })}
-              style={{ marginLeft: 90, width: '50%' }}>
+              style={{ marginLeft: 10, width: '50%' }}>
               <Text style={{ color: "#0000F7" }}>Xem chi tiết....</Text>
             </TouchableOpacity>
           </View>

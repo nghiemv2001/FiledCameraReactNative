@@ -9,6 +9,7 @@ import { AddressContext } from './../../component/AddressContext';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { cos } from 'react-native-reanimated';
+import moment from 'moment';
 // Trong component PhanAnh
 const ThongTinPhanAnh = ({ navigation, route }) => {
   const LayThongTin = (type) => {
@@ -151,17 +152,101 @@ const ThongTinPhanAnh = ({ navigation, route }) => {
             alert(data.error);
           }
           else {
-            Alert.alert('Thông báo','Thành công !')
+            Alert.alert('Thông báo', 'Thành công !')
             navigation.navigate('QuanLi')
           }
         }
       )
   }
   //
-    const XacNhanHoanThanhPhanAnh= () =>{
-      console.log('a')
-    }
-   
+  const XacNhanHoanThanhPhanAnh = () => {
+    Alert.alert('Xác nhận', 'Xử lí phản ảnh kết thúc!', [
+      {
+        text : 'Cancel'
+      },
+      {text: 'OK', onPress: () => PhanhAnhHoanThanh()},
+    ]);
+  }
+  const PhanhAnhHoanThanh = ()=>{
+     const now = moment(); 
+    const targetDate = moment({
+      year: fdata.nam,
+      month: fdata.thang - 1, 
+      hours: fdata.gio,
+      minutes: fdata.phut,
+    });
+    const duration = moment.duration(now.diff(targetDate));
+    const timeDiffInHours = duration.asHours();
+    const timeDiffInDays = duration.asDays();
+    const totalDays = Math.floor(timeDiffInDays);
+    const remainingHours = Math.floor(timeDiffInHours % 24); 
+    fdata.thoigianxuli = totalDays.toString() + " ngày " + remainingHours.toString() + " giờ";
+    fdata.trangthai = 3;
+    ///xoamotphananh
+    fetch(shareVarible.URLink + '/PhanAnhDangXuLi/delete/' + `${fdata.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+      })
+      .catch(error => {
+        console.error('Error', error);
+      }
+      )
+    //Themphananhdangxuli
+    fetch(shareVarible.URLink + '/PhanAnhHoanThanh/create',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(fdata)
+      }).then(res => res.json()).then(
+        data => {
+          if (data.error) {
+            setErrormgs(data.error);
+            console.log(data.error)
+            alert(data.error);
+          }
+          else {
+            Alert.alert('Thông báo', 'Thành công !')
+            navigation.navigate('QuanLi')
+          }
+        }
+      )
+  }
+  //
+  const XacNhanXoaPhanAnh = () => {
+    Alert.alert('Xác nhận', 'Xóa phản ảnh này!', [
+      {
+        text : 'Cancel'
+      },
+      {text: 'OK', onPress: () => XoaPhanhAnh()},
+    ]);
+  }
+
+  const XoaPhanhAnh =()=>{
+    fetch(shareVarible.URLink + '/PhanAnhHoanThanh/delete/' + `${fdata.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+            Alert.alert('Thông báo', 'Thành công !')
+            navigation.navigate('QuanLi')
+      })
+      .catch(error => {
+        console.error('Error', error);
+      }
+      )
+  }
   return (
     <View style={{ backgroundColor: "#B0EDF5" }}>
       <KeyboardAwareScrollView style={{ height: "100%", width: "100%" }}>
@@ -181,10 +266,10 @@ const ThongTinPhanAnh = ({ navigation, route }) => {
           </View>
           <View style={{ flexDirection: 'row', marginTop: 5, paddingLeft: 10 }}>
             {
-              (fdata.trangthai == 3) 
-              ? <Text style={{ fontSize: 18, fontWeight: '500', flexShrink: 1 }}ellipsizeMode="tail">Thời gian xử lí: {fdata.thoigianxuli}</Text>
-              :
-              <Text style={{ fontSize: 18, fontWeight: '500', flexShrink: 1 }}ellipsizeMode="tail">Thời gian: {fdata.gio}h{fdata.phut}' - {fdata.ngay}/{fdata.thang}/{fdata.nam}</Text>
+              (fdata.trangthai == 3)
+                ? <Text style={{ fontSize: 18, fontWeight: '500', flexShrink: 1 }} ellipsizeMode="tail">Thời gian xử lí: {fdata.thoigianxuli}</Text>
+                :
+                <Text style={{ fontSize: 18, fontWeight: '500', flexShrink: 1 }} ellipsizeMode="tail">Thời gian: {fdata.gio}h{fdata.phut}' - {fdata.ngay}/{fdata.thang}/{fdata.nam}</Text>
             }
           </View>
           <Text style={{ marginTop: 10, paddingLeft: 10 }}>bản đồ</Text>
@@ -205,21 +290,27 @@ const ThongTinPhanAnh = ({ navigation, route }) => {
           <Text style={{ marginTop: 10, paddingLeft: 10 }}>ảnh minh họa</Text>
           <Image style={{ height: '60%', width: '90%', borderRadius: 30, marginBottom: 0, borderWidth: 1, height: 190, width: 390, marginLeft: 10 }} source={{ uri: fdata.hinhanh }} />
           {
-            (fdata.trangthai === 1 || fdata.trangthai === 0) ? 
-            <TouchableOpacity
-            onPress={() => XacNhanPhanAnh()}
-            style={{ justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: 10 }}>
-            <Text style={{ height: 50, width: 300, textAlign: 'center', fontSize: 22, backgroundColor: 'white', textAlignVertical: 'center', borderRadius: 12, fontWeight: '500' }}>XỬ LÍ</Text>
-          </TouchableOpacity>
-          : (fdata.trangthai === 2) ?
-          <TouchableOpacity
-            onPress={() => XacNhanHoanThanhPhanAnh()}
-            style={{ justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: 10 }}>
-            <Text style={{ height: 50, width: 300, textAlign: 'center', fontSize: 22, backgroundColor: 'white', textAlignVertical: 'center', borderRadius: 12, fontWeight: '500' }}>HOÀN THÀNH</Text>
-          </TouchableOpacity>
-          : null
+            (fdata.trangthai === 1 || fdata.trangthai === 0) ?
+              <TouchableOpacity
+                onPress={() => XacNhanPhanAnh()}
+                style={{ justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: 10 }}>
+                <Text style={{ height: 50, width: 300, textAlign: 'center', fontSize: 22, backgroundColor: 'white', textAlignVertical: 'center', borderRadius: 12, fontWeight: '500' }}>XỬ LÍ</Text>
+              </TouchableOpacity>
+              : (fdata.trangthai === 2) ?
+                <TouchableOpacity
+                  onPress={() => XacNhanHoanThanhPhanAnh()}
+                  style={{ justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: 10 }}>
+                  <Text style={{ height: 50, width: 300, textAlign: 'center', fontSize: 22, backgroundColor: 'white', textAlignVertical: 'center', borderRadius: 12, fontWeight: '500' }}>HOÀN THÀNH</Text>
+                </TouchableOpacity>
+                : (fdata.trangthai === 3) ?
+                <TouchableOpacity
+                  onPress={() => XacNhanXoaPhanAnh()}
+                  style={{ justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: 10 }}>
+                  <Text style={{ height: 50, width: 300, textAlign: 'center', fontSize: 22, backgroundColor: 'white', textAlignVertical: 'center', borderRadius: 12, fontWeight: '500' }}>XÓA</Text>
+                </TouchableOpacity>
+                : null
           }
-          
+
         </ScrollView>
       </KeyboardAwareScrollView>
 
