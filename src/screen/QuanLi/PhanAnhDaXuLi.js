@@ -26,7 +26,6 @@ const PhanAnhDaXuLi = ({ navigation }) => {
   };
   useEffect(() => {
     fetchData();
-    console.log(danhsachPhanAnh)
   }, []);
   const renderlist = ((item) => {
     return (

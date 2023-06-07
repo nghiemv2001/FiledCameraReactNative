@@ -68,7 +68,7 @@ const TrangChuNguoiDung = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <View style={{ height: '26%', width: '100%', flexDirection: 'row', justifyContent: 'center' }}>
-        <TouchableOpacity >
+        <TouchableOpacity  onPress={() => navigation.navigate('ThongBaoNguoiDung')}>
           <Image style={{ height: 90, width: 90, borderRadius: 90, marginLeft: 30, marginTop: 50 }} source={img_thongbao} />
           <Text style={{ textAlign: 'center', width: 150 }}>Thông báo</Text>
         </TouchableOpacity>

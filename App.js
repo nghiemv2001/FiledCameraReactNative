@@ -18,6 +18,7 @@ import TrangChuNguoiDung from './src/screen/NguoiDung/TrangChuNguoiDung';
 import PhanAnh from './src/screen/NguoiDung/PhanAnh';
 import TinTuc from './src/screen/NguoiDung/TinTuc';
 import MapGG from './src/screen/NguoiDung/MapGG'
+import ThongBaoNguoiDung from './src/screen/NguoiDung/ThongBaoNguoiDung';
 import { AddressProvider } from './src/component/AddressContext';
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -26,7 +27,16 @@ export default function App() {
     <NavigationContainer>
       <AddressProvider>
         <Stack.Navigator>
-        <Stack.Screen name="DangNhap" component={DangNhap} options={{
+        <Stack.Screen name="TrangChuNguoiDung" component={TrangChuNguoiDung} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="TrangChuQuanLi" component={TrangChuQuanLi} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="TrangChuAdmin" component={TrangChuAdmin} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="DangNhap" component={DangNhap} options={{
             headerShown: false
           }} />
           <Stack.Screen name="QuanLi" component={QuanLi} options={{
@@ -35,12 +45,8 @@ export default function App() {
           <Stack.Screen name="PhanAnh" component={PhanAnh} options={{
             headerShown: false
           }} />
-          <Stack.Screen name="TrangChuQuanLi" component={TrangChuQuanLi} options={{
-            headerShown: false
-          }} />
-          <Stack.Screen name="TrangChuNguoiDung" component={TrangChuNguoiDung} options={{
-            headerShown: false
-          }} />
+         
+          
           <Stack.Screen name="ManHinhCho" component={ManHinhCho} options={{
             headerShown: false
           }} />
@@ -48,9 +54,6 @@ export default function App() {
             headerShown: false
           }} />
           <Stack.Screen name="DangKy" component={DangKy} options={{
-            headerShown: false
-          }} />
-          <Stack.Screen name="TrangChuAdmin" component={TrangChuAdmin} options={{
             headerShown: false
           }} />
           <Stack.Screen name="TinTuc" component={TinTuc} options={{
@@ -63,6 +66,9 @@ export default function App() {
             headerShown: false
           }} />
           <Stack.Screen name="PhanAnhDangXuLi" component={PhanAnhDangXuLi} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="ThongBaoNguoiDung" component={ThongBaoNguoiDung} options={{
             headerShown: false
           }} />
         </Stack.Navigator>

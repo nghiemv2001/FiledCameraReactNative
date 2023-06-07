@@ -11,7 +11,7 @@ const DangKy = ({ navigation }) => {
     password: "",
     role: "3",
     keycode: "0000",
-    image: "https://res.cloudinary.com/dmsgfvp0y/image/upload/v1684391380/trangcanhan_inwrjo.png"
+    image: "https://res.cloudinary.com/dmsgfvp0y/image/upload/v1686141313/canhan_tpsqcd.png"
   })
   const [fpassword, SetFPassword] = useState({
     confirmpass: ""
