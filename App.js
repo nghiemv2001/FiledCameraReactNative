@@ -19,6 +19,7 @@ import PhanAnh from './src/screen/NguoiDung/PhanAnh';
 import TinTuc from './src/screen/NguoiDung/TinTuc';
 import MapGG from './src/screen/NguoiDung/MapGG'
 import ThongBaoNguoiDung from './src/screen/NguoiDung/ThongBaoNguoiDung';
+import ChiTietThongBao from './src/screen/NguoiDung/ChiTietThongBao'
 import { AddressProvider } from './src/component/AddressContext';
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -45,8 +46,6 @@ export default function App() {
           <Stack.Screen name="PhanAnh" component={PhanAnh} options={{
             headerShown: false
           }} />
-         
-          
           <Stack.Screen name="ManHinhCho" component={ManHinhCho} options={{
             headerShown: false
           }} />
@@ -69,6 +68,9 @@ export default function App() {
             headerShown: false
           }} />
           <Stack.Screen name="ThongBaoNguoiDung" component={ThongBaoNguoiDung} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="ChiTietThongBao" component={ChiTietThongBao} options={{
             headerShown: false
           }} />
         </Stack.Navigator>

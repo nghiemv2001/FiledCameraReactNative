@@ -9,7 +9,7 @@ import * as Location from 'expo-location';
 import { AddressContext } from './../../component/AddressContext';
 // Trong component PhanAnh
 const PhanAnh = ({ navigation }) => {
-  const { currentAddress, currentLatitude, currentLongitude, setCoordinates, setAddress } = useContext(AddressContext);
+  const { currentAddress, currentLatitude, currentLongitude, setCoordinates, setAddress, currentUserId } = useContext(AddressContext);
   const [currentLocation, setCurrentLocation] = useState(null);
   const [toggleCheckBox, setToggleCheckBox] = useState(false)
   const [Errormgs, setErrormgs] = useState(null)
@@ -30,18 +30,32 @@ const PhanAnh = ({ navigation }) => {
     longitudeDelta: "0.0421",
     vitri: "",
     hinhanh: "",
-    phut : 1,
-    gio : 1,
-    ngay : 1,
-    thang : 1,
-    nam : 1
+    phut: 1,
+    gio: 1,
+    ngay: 1,
+    thang: 1,
+    nam: 1
+  })
+  const [fthongbao, setThongBao] = useState({
+    noidung: "",
+    trangthai: 0,
+    userID: "",
+    phut: "",
+    gio: "",
+    ngay: "",
+    thang: "",
+    nam: "",
+    noidungphananh: "",
+    hinhanh: "",
+    vitri: "",
+    thoigian: ""
   })
   const TaoPhanAnh = () => {
     const now = new Date();
     fdata.phut = now.getMinutes();
     fdata.gio = now.getHours();
     fdata.ngay = now.getDate();
-    fdata.thang = now.getMonth()+ 1;
+    fdata.thang = now.getMonth() + 1;
     fdata.nam = now.getFullYear();
     if (toggleCheckBox == true) {
       fdata.trangthai = 0;
@@ -51,8 +65,20 @@ const PhanAnh = ({ navigation }) => {
     }
     fdata.latitudeDelta = currentLatitude;
     fdata.longitudeDelta = currentLongitude
-    fdata.vitri = currentAddress
-    console.log(fdata)
+
+
+    // console.log(fdata)
+    fthongbao.noidung = "Phản ảnh " + `${fdata.noidung}` + " đã được đăng vào thời gian: " + `${fdata.gio}` + "giờ " + `${fdata.phut}` + 'phút ' + `${fdata.ngay}` + "/" + `${fdata.thang}` + "/" + `${fdata.nam}`;
+    fthongbao.userID = currentUserId;
+    fthongbao.phut = now.getMinutes();
+    fthongbao.gio = now.getHours();
+    fthongbao.ngay = now.getDate();
+    fthongbao.thang = now.getMonth() + 1;
+    fthongbao.nam = now.getFullYear();
+    fthongbao.noidungphananh = fdata.noidung
+    fthongbao.hinhanh = fdata.hinhanh
+    fthongbao.vitri = currentAddress
+    fthongbao.thoigian = `${fdata.gio}` + "giờ" + `${fdata.phut}` + 'phút' + `${fdata.ngay}` + "/" + `${fdata.thang}` + "/" + `${fdata.nam}`
     if (fdata.noidung == "") {
       alert("Nội dụng là bắt buộc!")
       return;
@@ -62,37 +88,53 @@ const PhanAnh = ({ navigation }) => {
       return;
     }
     else {
-      Alert.alert('Xác nhận', 'Kiểm tra lại nội dung của phản ánh! Hãy đảm bảo sự chuẩn xác !'+'\nNội dung: '+`${fdata.noidung}`+'\nVị trí: '+`${fdata.vitri}`, [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {
-          text: 'OK', onPress: () =>
-            fetch(shareVarible.URLink + '/PhanAnh/create',
-              {
+      Alert.alert(
+        'Xác nhận',
+        'Kiểm tra lại nội dung của phản ánh! Hãy đảm bảo sự chuẩn xác !' + '\nNội dung: ' + `${fdata.noidung}` + '\nVị trí: ' + `${fdata.vitri}`,
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'OK',
+            onPress: () => {
+              const createPhanAnhRequest = fetch(shareVarible.URLink + '/PhanAnh/create', {
                 method: 'POST',
                 headers: {
-                  'Content-Type': 'application/json'
+                  'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(fdata)
-              }).then(res => res.json()).then(
-                data => {
-                  if (data.error) {
-                    setErrormgs(data.error);
-                    console.log(data.error)
-                    alert(data.error);
-                  }
-                  else {
-                    setFdata({ ...fdata, mota: "", hinhanh: "" })
-                    alert('Thành công thêm phản ánh');
-                    navigation.navigate('TrangChuNguoiDung')
-                  }
-                }
-              )
-        },
-      ]);
+                body: JSON.stringify(fdata),
+              });
+
+              const createThongBaoRequest = fetch(shareVarible.URLink + '/ThongBao/create', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(fthongbao),
+              });
+
+              Promise.all([createPhanAnhRequest, createThongBaoRequest])
+                .then(([phanAnhResponse, thongBaoResponse]) => {
+                  // Kiểm tra và xử lý phản hồi từ cả hai API POST ở đây
+                  // ...
+                  // Nếu thành công
+                  setFdata({ ...fdata,noidung: '', mota: '', hinhanh: '' });
+                  alert('Thành công thêm phản ánh');
+                  navigation.navigate('TrangChuNguoiDung');
+                })
+                .catch((error) => {
+                  // Xử lý lỗi nếu có
+                  setErrormgs(error.message);
+                  console.log(error);
+                  alert(error.message);
+                });
+            },
+          },
+        ]
+      )
     }
   }
   //take image from libary and image

@@ -6,6 +6,7 @@ export const AddressProvider = ({ children }) => {
   const [currentAddress, setCurrentAddress] = useState(null);
   const [currentLatitude, setCurrentLatitude] = useState(null);
   const [currentLongitude, setCurrentLongitude] = useState(null);
+  const [currentUserId, setCurrentUserId] = useState(null);
 
   const setAddress = (address) => {
     setCurrentAddress(address);
@@ -16,12 +17,18 @@ export const AddressProvider = ({ children }) => {
     setCurrentLongitude(longitude);
   };
 
+  const setUserId = (userId) => {
+    setCurrentUserId(userId);
+  };
+
   const addressContextValue = {
     currentAddress,
     currentLatitude,
     currentLongitude,
+    currentUserId,
     setAddress,
-    setCoordinates
+    setCoordinates,
+    setUserId
   };
 
   return (
