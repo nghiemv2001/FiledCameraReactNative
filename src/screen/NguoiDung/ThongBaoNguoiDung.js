@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import shareVarible from '../../../AppContext'
 import { AddressContext } from './../../component/AddressContext';
-
+import { useFocusEffect } from '@react-navigation/native'
 const ThongBaoNguoiDung = ({navigation}) => {
     const { currentUserId } = useContext(AddressContext);
     const [thongbao, setThongBao] = useState(null)
@@ -21,9 +21,11 @@ const ThongBaoNguoiDung = ({navigation}) => {
         vitri: "",
         thoigian: ""
     })
-    useEffect(() => {
-        fetchData();
-    }, []);
+    useFocusEffect(
+        React.useCallback(() => {
+          fetchData();
+        }, [])
+      );
     const fetchData = () => {
         fetch(shareVarible.URLink + '/thongbao/' + `${currentUserId}`, {
             method: 'GET',
@@ -63,7 +65,7 @@ const ThongBaoNguoiDung = ({navigation}) => {
                     alert(data.error);
                   }
                   else {
-                    navigation.navigate('ChiTietThongBao')
+                    navigation.navigate('ChiTietThongBao', {item : fdata})
                   }
                 }
               )
@@ -75,24 +77,24 @@ const ThongBaoNguoiDung = ({navigation}) => {
                 style={{ height: 90, width: "100%", borderBottomWidth: 1, justifyContent: 'center', alignItems: 'center', }}>
                 {
                     (item.trangthai == 1) ?
-                        <View style={{ height: 80, width: '95%', backgroundColor: 'white', borderRadius: 10 }}>
+                        <View style={{ height: 80, width: '95%', backgroundColor: 'white', borderRadius: 10 , borderWidth:1}}>
                             <Text
                                 numberOfLines={3}
                                 style={{ marginTop: 6, marginLeft: 5, height: 49, width: '100%' }}>{item.noidung}</Text>
                             <View></View>
                             <Text
-                                style={{ marginTop: 6, marginLeft: 5, height: 20, width: '100%', marginLeft: 260, fontWeight: 'bold' }}
+                                style={{ marginTop: 6, marginLeft: 5, height: 20, width: '100%', marginLeft: 200, fontWeight: 'bold' }}
                                 numberOfLines={1}>{item.gio}h{item.phut}' - {item.ngay}/{item.thang}/{item.nam}</Text>
                         </View>
                         :
-                        <View style={{ height: 80, width: '95%', backgroundColor: '#CCCCCC', borderRadius: 10 }}>
+                        <View style={{ height: 80, width: '95%', backgroundColor: '#CCCCCC', borderRadius: 10, borderWidth: 1 }}>
 
                             <Text
                                 numberOfLines={3}
                                 style={{ marginTop: 6, marginLeft: 5, height: 49, width: '100%' }}>{item.noidung}</Text>
                             <View></View>
                             <Text
-                                style={{ marginTop: 6, marginLeft: 5, height: 20, width: '100%', marginLeft: 260, fontWeight: 'bold' }}
+                                style={{ marginTop: 6, marginLeft: 5, height: 20, width: '100%', marginLeft: 200, fontWeight: 'bold' }}
                                 numberOfLines={1}>{item.gio}h{item.phut}' - {item.ngay}/{item.thang}/{item.nam}</Text>
                         </View>
                 }
@@ -100,8 +102,12 @@ const ThongBaoNguoiDung = ({navigation}) => {
         )
     }
     return (
-        <View style={{ width: '100%', height: '100%' }}>
-            <FlatList
+        <View style={{ width: '100%', height: '100%', backgroundColor: 'white'}}>
+            <View style={{padding: 5, position:'absolute', height: 25, width: 220, backgroundColor: 'white', marginTop: 30, marginLeft: 19, zIndex: 1}}>
+                <Text style={{marginRight : 190, fontSize: 22, fontWeight: '600', height: 50, width: 250}}>Danh sách thông báo</Text>
+            </View>
+            <View style={{height : '90%', width: "90%", borderWidth: 4, marginTop: 50, marginLeft: 20, borderBottomLeftRadius: 20, borderBottomRightRadius: 20}}>
+ <FlatList
                 style={{ marginTop: 15 }}
                 data={thongbao}
                 renderItem={({ item }) => {
@@ -109,6 +115,7 @@ const ThongBaoNguoiDung = ({navigation}) => {
                 }}
                 keyExtractor={item => item._id}
             />
+            </View>
         </View>
     )
 }

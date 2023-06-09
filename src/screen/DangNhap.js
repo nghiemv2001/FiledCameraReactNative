@@ -60,7 +60,7 @@ const DangNHap = ({ navigation}) => {
           <TouchableOpacity onPress={() => navigation.navigate('DangKy')}>
             <Text style={{ marginRight: 60, color: 'red' }}>Đăng ký tài khoản</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('QuenMatKhau')}>
             <Text style={{ color: 'red' }}>Quên mật khẩu</Text>
           </TouchableOpacity>
         </View>

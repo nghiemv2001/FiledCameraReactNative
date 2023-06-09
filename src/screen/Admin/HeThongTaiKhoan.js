@@ -4,7 +4,7 @@ import React, { useMemo, useState, useEffect } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import shareVarible from '../../../AppContext'
 import { useFocusEffect } from '@react-navigation/native'
-import RadioGroup,{RadioButtonProps} from 'react-native-radio-buttons-group';
+import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 const HeThongTaiKhoan = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
@@ -13,28 +13,28 @@ const HeThongTaiKhoan = ({ navigation }) => {
   );
   const [visible, setVisible] = React.useState(false);
   const [selectedItem, setSelectedItem] = useState(null); // State variable to store the selected item
-  const [role , SetRole] = useState(1)
+  const [role, SetRole] = useState(1)
   const [fdata, setFData] = useState({
-    name : "",
-    email:"",
-    image:"",
-    password:"",
-    phone : "",
-    role:"",
-    keycode :"0"
+    name: "",
+    email: "",
+    image: "",
+    password: "",
+    phone: "",
+    role: "",
+    keycode: "0"
   })
   const showDialog = (item) => {
     setSelectedItem(item); // Store the selected item in the state variable
     setVisible(true);
     SetRole(item.role)
-    setFData({ ...fdata, name: item.name,email: item.email,image: item.image,password: item.password,phone: item.phone,role: item.role, })
+    setFData({ ...fdata, name: item.name, email: item.email, image: item.image, password: item.password, phone: item.phone, role: item.role, })
     setSelectedId(item.role);
   };
-  const CapNhatQuyen = async (item)=>{
-    if(selectedId != role){
+  const CapNhatQuyen = async (item) => {
+    if (selectedId != role) {
       fdata.role = selectedId
       console.log("OK", fdata)
-      const response = await fetch(shareVarible.URLink + '/user/update/'+`${item._id}`, {
+      const response = await fetch(shareVarible.URLink + '/user/update/' + `${item._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -67,20 +67,20 @@ const HeThongTaiKhoan = ({ navigation }) => {
       },
     ]);
   };
-  const closeDialog =()=>{
+  const closeDialog = () => {
     setVisible(false)
   }
   const [danhsachtaikhoan, SetDanhSachTaiKhoan] = useState(null);
   const radioButtons = useMemo(() => ([
     {
-        id: '1',
-        label: 'Người dùng',
+      id: '1',
+      label: 'Người dùng',
     },
     {
-        id: '2',
-        label: 'Quản lí        ',
+      id: '2',
+      label: 'Quản lí        ',
     }
-]), []);
+  ]), []);
   const [selectedId, setSelectedId] = useState();
   const fetchData = () => {
     fetch(shareVarible.URLink + '/users/ ', {
@@ -125,37 +125,43 @@ const HeThongTaiKhoan = ({ navigation }) => {
   };
 
   const renderlist = ((item) => {
-    return (
-      <View style={{ height: 120, width: '100%', borderBottomWidth: 3, flexDirection: 'row', alignItems: 'center' }}>
-        <View style={{ height: 100, width: '25%' }}>
-          <Image
-            style={{ height: "100%", width: '100%', borderWidth: 1, borderRadius: 100}}
-            source={{ uri: item.image }}/>
-        </View>
-        <View style={{ flexDirection: 'column', marginLeft: 10, width: '45%' }}>
-          <Text
-            numberOfLines={1}
-            style={{ fontSize: 28, fontWeight: 'bold' }}>{item.name}</Text>
-          {
-            (item.role == 2) ? <Text style={{ fontSize: 22 }}>Quản Lí</Text>
-              : <Text style={{ fontSize: 22 }}>Người dùng</Text>
-          }
-        </View>
-        <View style={{ flexDirection: 'column', marginLeft: 50, with: '20%' }}>
-          <TouchableOpacity>
-            <Ionicons
-              onPress={() =>showDialog(item)}
-              name="pencil" size={40} />
-          </TouchableOpacity>
+    if (item.role == 1 ) {
+      return null; 
+    }
+    else {
+      return (
+        <View style={{ height: 120, width: '100%', borderBottomWidth: 3, flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{ height: 100, width: '25%' }}>
+            <Image
+              style={{ height: "100%", width: '100%', borderWidth: 1, borderRadius: 100 }}
+              source={{ uri: item.image }} />
+          </View>
+          <View style={{ flexDirection: 'column', marginLeft: 10, width: '45%' }}>
+            <Text
+              numberOfLines={1}
+              style={{ fontSize: 28, fontWeight: 'bold' }}>{item.name}</Text>
+            {
+              (item.role == 2) ? <Text style={{ fontSize: 22 }}>Quản Lí</Text>
+                : <Text style={{ fontSize: 22 }}>Người dùng</Text>
+            }
+          </View>
+          <View style={{ flexDirection: 'column', marginLeft: 50, with: '20%' }}>
+            <TouchableOpacity>
+              <Ionicons
+                onPress={() => showDialog(item)}
+                name="pencil" size={40} />
+            </TouchableOpacity>
 
-          <TouchableOpacity>
-            <Ionicons name='close-circle-sharp' size={40}
-              onPress={() => XoaTaiKhoan(item)}
-            />
-          </TouchableOpacity>
+            <TouchableOpacity>
+              <Ionicons name='close-circle-sharp' size={40}
+                onPress={() => XoaTaiKhoan(item)}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    )
+      )
+    }
+
   })
   return (
     <View style={{ flex: 1 }}>
@@ -174,7 +180,7 @@ const HeThongTaiKhoan = ({ navigation }) => {
               />
             </Dialog.Content>
             <Dialog.Actions>
-            <Button onPress={closeDialog}>cancel</Button>
+              <Button onPress={closeDialog}>cancel</Button>
               <Button onPress={hideDialog}>Xác nhận</Button>
             </Dialog.Actions>
           </Dialog>

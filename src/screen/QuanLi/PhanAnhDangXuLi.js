@@ -29,7 +29,6 @@ const PhanAnhDangXuLi = ({navigation}) => {
     fetchData();
   }, []);
   const renderlist = ((item) => {
-
     return (
       <View style={{
         height: 200, width: '100%', backgroundColor: 'white', borderBottomWidth: 10, justifyContent: 'center', alignItems: 'center'

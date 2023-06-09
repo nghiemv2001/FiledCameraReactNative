@@ -10,7 +10,6 @@ const Tab = createBottomTabNavigator();
 const tabs = ({ refreshData, onRefreshData, count }) => {
     return (
         <Tab.Navigator
-        
             screenOptions={({ route }) => ({
                 tabBarStyle: {height: 70 },
                 tabBarIcon: ({ focused, color, size }) => {

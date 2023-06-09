@@ -1,10 +1,11 @@
 import { View, Text, StyleSheet, TextInput, Image, TouchableOpacity, FlatList, Alert } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import shareVarible from '../../../AppContext'
 import { useFocusEffect } from '@react-navigation/native'
+import { AddressContext } from '../../component/AddressContext'
 const PhanAnhKhan = ({navigation}) => {
-  
+  const {currentUserRole,currentUserId,} = useContext(AddressContext);
   const [danhsachPhanAnh, SetDanhSachPhanAnh] = useState(null);
   useFocusEffect(
     React.useCallback(() => {
@@ -61,7 +62,7 @@ const PhanAnhKhan = ({navigation}) => {
   return (
     <View style={{ width: '100%', height: '100%' }}>
       <FlatList
-        style={{marginTop: 10}}
+        style={{marginTop: 20}}
         data={danhsachPhanAnh}
         renderItem={({ item }) => {
           return renderlist(item)

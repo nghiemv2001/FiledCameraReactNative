@@ -28,6 +28,7 @@ const PhanAnh = ({ navigation }) => {
     trangthai: 1,
     latitudeDelta: "0.0922",
     longitudeDelta: "0.0421",
+    userID:"",
     vitri: "",
     hinhanh: "",
     phut: 1,
@@ -65,8 +66,8 @@ const PhanAnh = ({ navigation }) => {
     }
     fdata.latitudeDelta = currentLatitude;
     fdata.longitudeDelta = currentLongitude
-
-
+    fdata.vitri = currentAddress;
+    fdata.userID = currentUserId;
     // console.log(fdata)
     fthongbao.noidung = "Phản ảnh " + `${fdata.noidung}` + " đã được đăng vào thời gian: " + `${fdata.gio}` + "giờ " + `${fdata.phut}` + 'phút ' + `${fdata.ngay}` + "/" + `${fdata.thang}` + "/" + `${fdata.nam}`;
     fthongbao.userID = currentUserId;

@@ -61,7 +61,21 @@ const ThongTinPhanAnh = ({ navigation, route }) => {
     thoigianxuli: LayThongTin("thoigianxuli"),
   })
   console.log(fdata)
-  const { currentAddress, currentLatitude, currentLongitude, setCoordinates, setAddress } = useContext(AddressContext);
+  const [fthongbao, setThongBao] = useState({
+    noidung: "",
+    trangthai: 0,
+    userID: "",
+    phut: "",
+    gio: "",
+    ngay: "",
+    thang: "",
+    nam: "",
+    noidungphananh: "",
+    hinhanh: "",
+    vitri: "",
+    thoigian: ""
+  })
+  const { currentAddress, currentLatitude, currentLongitude, setCoordinates, setAddress,currentUserRole,currentUserId} = useContext(AddressContext);
   const [currentLocation, setCurrentLocation] = useState(null);
   const [toggleCheckBox, setToggleCheckBox] = useState(false)
   const [Errormgs, setErrormgs] = useState(null)
@@ -151,13 +165,49 @@ const ThongTinPhanAnh = ({ navigation, route }) => {
             console.log(data.error)
             alert(data.error);
           }
-          else {
-            Alert.alert('Thông báo', 'Thành công !')
+        }
+      )
+     //Tạo một thông báo 
+     const now = new Date();
+     fthongbao.noidung = "Phản ảnh " + `${fdata.noidung}` + " đã được cán bộ xử lí vào thời gian: " + `${fdata.gio}` + "giờ " + `${fdata.phut}` + 'phút ' + `${fdata.ngay}` + "/" + `${fdata.thang}` + "/" + `${fdata.nam}`;
+     fthongbao.userID = currentUserId;
+     fthongbao.trangthai = 0;
+     fthongbao.phut = now.getMinutes();
+     fthongbao.gio = now.getHours();
+     fthongbao.ngay = now.getDate();
+     fthongbao.thang = now.getMonth() + 1;
+     fthongbao.nam = now.getFullYear();
+     fthongbao.noidungphananh = fdata.noidung
+     fthongbao.hinhanh = fdata.hinhanh
+     fthongbao.vitri = currentAddress
+     fthongbao.thoigian = `${fdata.gio}` + "giờ" + `${fdata.phut}` + 'phút' + `${fdata.ngay}` + "/" + `${fdata.thang}` + "/" + `${fdata.nam}`
+     fetch(shareVarible.URLink + '/ThongBao/create',
+     {
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json'
+       },
+       body: JSON.stringify(fthongbao)
+     }).then(res => res.json()).then(
+       data => {
+         if (data.error) {
+           setErrormgs(data.error);
+           console.log(data.error)
+           alert(data.error);
+         }
+         else {
+          Alert.alert('Thông báo', 'Thành công !')
+          if(currentUserRole == 1){
+            navigation.navigate('TrangChuAdmin')
+          }
+          else{
             navigation.navigate('QuanLi')
           }
         }
-      )
-  }
+       }
+     )
+  
+    }
   //
   const XacNhanHoanThanhPhanAnh = () => {
     Alert.alert('Xác nhận', 'Xử lí phản ảnh kết thúc!', [
@@ -197,7 +247,7 @@ const ThongTinPhanAnh = ({ navigation, route }) => {
         console.error('Error', error);
       }
       )
-    //Themphananhdangxuli
+    //Themphananhdahoanthanh
     fetch(shareVarible.URLink + '/PhanAnhHoanThanh/create',
       {
         method: 'POST',
@@ -212,12 +262,49 @@ const ThongTinPhanAnh = ({ navigation, route }) => {
             console.log(data.error)
             alert(data.error);
           }
-          else {
-            Alert.alert('Thông báo', 'Thành công !')
-            navigation.navigate('QuanLi')
-          }
         }
       )
+      //Tạo một thông báo 
+      const now1 = new Date();
+     fthongbao.noidung = "Phản ảnh " + `${fdata.noidung}` + " đã được cán bộ xử lí hoàn thành vào thời gian: " + `${fdata.gio}` + "giờ " + `${fdata.phut}` + 'phút ' + `${fdata.ngay}` + "/" + `${fdata.thang}` + "/" + `${fdata.nam}`;
+     fthongbao.userID = currentUserId;
+     fthongbao.trangthai = 0;
+     fthongbao.phut = now1.getMinutes();
+     fthongbao.gio = now1.getHours();
+     fthongbao.ngay = now1.getDate();
+     fthongbao.thang = now1.getMonth() + 1;
+     fthongbao.nam = now1.getFullYear();
+     fthongbao.noidungphananh = fdata.noidung
+     fthongbao.hinhanh = fdata.hinhanh
+     fthongbao.vitri = currentAddress
+     fthongbao.thoigian = `${fdata.gio}` + "giờ" + `${fdata.phut}` + 'phút' + `${fdata.ngay}` + "/" + `${fdata.thang}` + "/" + `${fdata.nam}`
+     fetch(shareVarible.URLink + '/ThongBao/create',
+     {
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json'
+       },
+       body: JSON.stringify(fthongbao)
+     }).then(res => res.json()).then(
+       data => {
+         if (data.error) {
+           setErrormgs(data.error);
+           console.log(data.error)
+           alert(data.error);
+         }
+         else {
+          Alert.alert('Thông báo', 'Thành công !')
+          if(currentUserRole == 1){
+            navigation.navigate('TrangChuAdmin')
+          }
+          else{
+            navigation.navigate('QuanLi')
+          }
+          
+        }
+       }
+     )
+    console.log(fthongbao)
   }
   //
   const XacNhanXoaPhanAnh = () => {
@@ -240,7 +327,12 @@ const ThongTinPhanAnh = ({ navigation, route }) => {
       .then(response => response.json())
       .then(data => {
             Alert.alert('Thông báo', 'Thành công !')
-            navigation.navigate('QuanLi')
+            if(currentUserRole == 1){
+              navigation.navigate('TrangChuAdmin')
+            }
+            else{
+              navigation.navigate('QuanLi')
+            }
       })
       .catch(error => {
         console.error('Error', error);
@@ -251,11 +343,20 @@ const ThongTinPhanAnh = ({ navigation, route }) => {
     <View style={{ backgroundColor: "#B0EDF5" }}>
       <KeyboardAwareScrollView style={{ height: "100%", width: "100%" }}>
         <ScrollView>
-          <TouchableOpacity
+          {
+            (currentUserRole == 1) ? 
+            <TouchableOpacity
+            onPress={() => navigation.navigate('TrangChuAdmin')}
+            style={{ height: 50, width: 50, justifyContent: 'center', alignItems: 'center', borderRadius: 70, borderWidth: 1, marginTop: 20, marginLeft: 5 }}>
+            <Ionicons name="chevron-back-sharp" size={35} />
+          </TouchableOpacity>
+            :
+            <TouchableOpacity
             onPress={() => navigation.navigate('QuanLi')}
             style={{ height: 50, width: 50, justifyContent: 'center', alignItems: 'center', borderRadius: 70, borderWidth: 1, marginTop: 20, marginLeft: 5 }}>
             <Ionicons name="chevron-back-sharp" size={35} />
           </TouchableOpacity>
+          }
           <View style={{ flexDirection: 'row', marginTop: 10, paddingLeft: 10 }}>
             <Text style={{ fontSize: 25, fontWeight: '500' }}>Phản ánh: </Text>
             <Text style={{ fontSize: 25, fontWeight: '500', flexShrink: 1 }} numberOfLines={1} ellipsizeMode="tail">{fdata.noidung}</Text>

@@ -6,6 +6,9 @@ import DangNhap from './src/screen/DangNhap'
 import DangKy from './src/screen/DangKy'
 import ManHinhCho from './src/screen/ManHinhCho'
 import TrangCaNhan from './src/screen/TrangCaNhan';
+import QuenMatKhau from './src/screen/QuenMatKhau';
+import NhapMaOPT from './src/screen/NhapMaOTP';
+import MatKhauMoi from './src/screen/MatKhauMoi'
 //admin
 import TrangChuAdmin from './src/screen/Admin/TrangChuAdmin';
 //quanli
@@ -28,16 +31,16 @@ export default function App() {
     <NavigationContainer>
       <AddressProvider>
         <Stack.Navigator>
-        <Stack.Screen name="TrangChuNguoiDung" component={TrangChuNguoiDung} options={{
+        <Stack.Screen name="DangNhap" component={DangNhap} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="TrangChuNguoiDung" component={TrangChuNguoiDung} options={{
             headerShown: false
           }} />
           <Stack.Screen name="TrangChuQuanLi" component={TrangChuQuanLi} options={{
             headerShown: false
           }} />
           <Stack.Screen name="TrangChuAdmin" component={TrangChuAdmin} options={{
-            headerShown: false
-          }} />
-          <Stack.Screen name="DangNhap" component={DangNhap} options={{
             headerShown: false
           }} />
           <Stack.Screen name="QuanLi" component={QuanLi} options={{
@@ -71,6 +74,15 @@ export default function App() {
             headerShown: false
           }} />
           <Stack.Screen name="ChiTietThongBao" component={ChiTietThongBao} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="QuenMatKhau" component={QuenMatKhau} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="NhapMaOTP" component={NhapMaOPT} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="MatKhauMoi" component={MatKhauMoi} options={{
             headerShown: false
           }} />
         </Stack.Navigator>

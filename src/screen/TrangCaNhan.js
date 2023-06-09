@@ -7,7 +7,8 @@ import { useFocusEffect } from '@react-navigation/native'
 import shareVarible from '../../AppContext'
 import { AddressContext } from './../component/AddressContext';
 const TrangCaNhan = ({ navigation, route }) => {
-    const { setUserId } = useContext(AddressContext);
+    const { setUserId, currentUserId } = useContext(AddressContext);
+    const { setUserRole } = useContext(AddressContext);
     const [dataAPI, SetDataAPI] = useState({
         id: "",
         name: "",
@@ -25,9 +26,11 @@ const TrangCaNhan = ({ navigation, route }) => {
             }
         })
             .then(response => response.json())
-            .then(data => {
-                SetDataAPI(data),
-                setUserId(data._id);
+            .then(data =>
+               { SetDataAPI(data)
+            console.log(data)
+            setUserId(data._id);
+            setUserRole(data.role);
             }
             )
             .catch(error => console.log(error));
@@ -37,8 +40,10 @@ const TrangCaNhan = ({ navigation, route }) => {
             ThongTinNguoiDung();
         }, [])
     );
+
     /////////
     const TimTrangChu = () => {
+        console.log(dataAPI)
         if (dataAPI.role === "1") {
             navigation.navigate('TrangChuAdmin')
         }
