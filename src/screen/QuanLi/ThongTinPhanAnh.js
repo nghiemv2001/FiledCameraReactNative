@@ -248,6 +248,7 @@ const ThongTinPhanAnh = ({ navigation, route }) => {
       }
       )
     //Themphananhdahoanthanh
+    console.log(fdata)
     fetch(shareVarible.URLink + '/PhanAnhHoanThanh/create',
       {
         method: 'POST',
@@ -411,7 +412,6 @@ const ThongTinPhanAnh = ({ navigation, route }) => {
                 </TouchableOpacity>
                 : null
           }
-
         </ScrollView>
       </KeyboardAwareScrollView>
 

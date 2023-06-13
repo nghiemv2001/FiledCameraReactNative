@@ -5,6 +5,7 @@ import PhanAnhChuaXuLi from '../screen/QuanLi/PhanAnhChuaXuLi'
 import PhanAnhDangXuLi from '../screen/QuanLi/PhanAnhDangXuLi'
 import PhanAnhDaXuLi from '../screen/QuanLi/PhanAnhDaXuLi'
 import HeThongTaiKhoan from '../screen/Admin/HeThongTaiKhoan'
+import ThongKe from './Admin/ThongKe';
 import { View, Text } from 'react-native'
 
 const Tab = createBottomTabNavigator();
@@ -32,6 +33,9 @@ const tabsAdmin = ({ refreshData, onRefreshData, count }) => {
                     else if (route.name === 'Tài Khoản') {
                         iconName = focused ? 'people' : 'people';
                     }
+                    else if (route.name === 'Thống kê') {
+                        iconName = focused ? 'bar-chart' : 'bar-chart';
+                    }
                     return <Ionicons name={iconName} size={40} color={color} />;
                 },
                 tabBarLabel: ({ focused, color, size }) => {
@@ -53,6 +57,7 @@ const tabsAdmin = ({ refreshData, onRefreshData, count }) => {
             <Tab.Screen name="Đang xử lí" component={PhanAnhDangXuLi} options={{headerShown : false }} initialParams={{ refreshData: true}}/>
             <Tab.Screen name="Đã xử lí" component={PhanAnhDaXuLi} options={{headerShown : false }}/>
             <Tab.Screen name="Tài Khoản" component={HeThongTaiKhoan} options={{headerShown : false }}/>
+            <Tab.Screen name="Thống kê" component={ThongKe} options={{headerShown : false }}/>
         </Tab.Navigator>
 
     )

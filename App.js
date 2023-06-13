@@ -31,7 +31,10 @@ export default function App() {
     <NavigationContainer>
       <AddressProvider>
         <Stack.Navigator>
-        <Stack.Screen name="DangNhap" component={DangNhap} options={{
+          <Stack.Screen name="TrangChuAdmin" component={TrangChuAdmin} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="DangNhap" component={DangNhap} options={{
             headerShown: false
           }} />
           <Stack.Screen name="TrangChuNguoiDung" component={TrangChuNguoiDung} options={{
@@ -40,9 +43,7 @@ export default function App() {
           <Stack.Screen name="TrangChuQuanLi" component={TrangChuQuanLi} options={{
             headerShown: false
           }} />
-          <Stack.Screen name="TrangChuAdmin" component={TrangChuAdmin} options={{
-            headerShown: false
-          }} />
+          
           <Stack.Screen name="QuanLi" component={QuanLi} options={{
             headerShown: false
           }} />

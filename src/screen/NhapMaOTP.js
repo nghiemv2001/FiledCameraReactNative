@@ -17,18 +17,23 @@ const NhapMaOPT = ({ navigation, route }) => {
   const [errormsg, setErrormsg] = useState(null);
   const XacNhanOTP = () => {
     const s = fdata.number1 + fdata.number2 + fdata.number3 + fdata.number4;
-        console.log(route.params.data.otpCode,s)
-    if(s != route.params.data.otpCode){
-      alert('sai')
+    if (s != route.params.data.otpCode) {
+      console.log(route.params.data.otpCode)
+      SetFDaTa({...fdata,number1: "",number2: "",number3: "",number4: "",})
+      alert('Mã OTP không chính xác !')
     }
-    else{
-      alert('dung')
+
+    else {
+      SetFDaTa({...fdata,number1: "",number2: "",number3: "",number4: "",})
+      fdata.email = route.params.fdata.email
+      navigation.navigate('MatKhauMoi', {data : fdata.email})
+4
     }
     // navigation.navigate('MatKhauMoi')
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#D9D9D9" }}>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       <Image style={{ height: 300, width: "100%" }} source={imgpass} />
       <View style={{ marginLeft: 0, marginTop: 90, flexDirection: 'row', justifyContent: 'center' }}>
         <TextInput
@@ -41,7 +46,7 @@ const NhapMaOPT = ({ navigation, route }) => {
           onChangeText={(text) => {
             SetFDaTa({ ...fdata, number1: text });
             if (text !== '') {
-              number2Ref.current.focus(); // Chuyển con trỏ sang number2
+              number2Ref.current.focus();
             }
           }}
         ></TextInput>
@@ -55,7 +60,7 @@ const NhapMaOPT = ({ navigation, route }) => {
           onChangeText={(text) => {
             SetFDaTa({ ...fdata, number2: text });
             if (text !== '') {
-              number3Ref.current.focus(); // Chuyển con trỏ sang number2
+              number3Ref.current.focus();
             }
           }}
         ></TextInput>
@@ -68,7 +73,7 @@ const NhapMaOPT = ({ navigation, route }) => {
           onChangeText={(text) => {
             SetFDaTa({ ...fdata, number3: text });
             if (text !== '') {
-              number4Ref.current.focus(); // Chuyển con trỏ sang number2
+              number4Ref.current.focus();
             }
           }}
         ></TextInput>
@@ -83,15 +88,14 @@ const NhapMaOPT = ({ navigation, route }) => {
             fdata.number4 = text
             SetFDaTa({ ...fdata, number4: text });
             if (text !== '') {
-              console.log(fdata.number4)
-              XacNhanOTP(); // Chuyển con trỏ sang number2
+              XacNhanOTP();
             }
           }}
         ></TextInput>
       </View>
       <TouchableOpacity
         onPress={() => XacNhanOTP()}
-        style={{ backgroundColor: "#D9D9D9" }}>
+        style={{ backgroundColor: "white" }}>
         <Text style={{ height: 50, width: 160, borderWidth: 2, textAlignVertical: 'center', textAlign: 'center', fontSize: 25, borderRadius: 12, marginTop: 100, marginLeft: 130 }}>XÁC NHẬN</Text>
       </TouchableOpacity>
 
