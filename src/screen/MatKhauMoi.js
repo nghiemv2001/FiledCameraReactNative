@@ -10,14 +10,16 @@ const MatKhauMoi = ({ navigation, route }) => {
     newPassword: ""
   })
   const [errormsg, setErrormsg] = useState(null);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const togglePasswordVisibility = () => { setPasswordVisible(!passwordVisible); };
   const UpdatePasss = async () => {
     fdata.email = route.params.data
     if (fdata.newPassword.length < 6) {
-      alert("Mật khẩu mạnh đảm bảo trên 6 ký tự!")
+      Alert.alert("Thông báo", "Mật khẩu mạnh đảm bảo trên 6 ký tự!")
       return;
     }
     if (!(/^\S+$/).test(fdata.newPassword)) {
-      alert("Mật khẩu mạnh đảm bảo không chưa khoảng trăng!")
+      Alert.alert("Thông báo", "Mật khẩu mạnh đảm bảo không chưa khoảng trăng!")
       return;
     }
     else {
@@ -31,7 +33,7 @@ const MatKhauMoi = ({ navigation, route }) => {
         });
         const data = await response.json();
         if (response.ok) {
-          alert('Thay đổi mật khẩu thành công!')
+          Alert.alert("Thông báo", 'Thay đổi mật khẩu thành công!')
           navigation.navigate('DangNhap')
         } else {
           console.error(data.error);
@@ -47,11 +49,24 @@ const MatKhauMoi = ({ navigation, route }) => {
       <Image style={{ height: 300, width: "100%" }} source={imgpass} />
       <View style={{ marginLeft: 30, marginTop: 40 }}>
         <Text style={{ fontSize: 16, marginRight: 260, width: 220, marginTop: 50, marginLeft: 10 }}>Mật khẩu mới</Text>
-        <TextInput style={{ height: 50, width: 350, borderWidth: 1, borderRadius: 20, marginTop: 0, paddingLeft: 10 }}
-          onPressIn={() => setErrormsg(null)}
-          value={fdata.newPassword}
-          onChangeText={(text) => SetFDaTa({ ...fdata, newPassword: text })}
-        ></TextInput>
+        <View style={{ height: 50, width: 350, borderWidth: 1, borderRadius: 20, marginTop: 0, paddingLeft: 10, flexDirection:'row' }}>
+          <TextInput style={{ height: 50, width: 300, paddingLeft: 10 }}
+            onPressIn={() => setErrormsg(null)}
+            secureTextEntry={!passwordVisible}
+            value={fdata.newPassword}
+            onChangeText={(text) => SetFDaTa({ ...fdata, newPassword: text })}
+          ></TextInput>
+          <TouchableOpacity
+            style={{ marginTop: 10 }}
+            onPress={togglePasswordVisibility}>
+            <Ionicons
+              name={passwordVisible ? 'eye-outline' : 'eye-off-outline'}
+              size={24}
+              color="gray"
+            />
+          </TouchableOpacity>
+        </View>
+
         <TouchableOpacity
           onPress={() => UpdatePasss()}
           style={{ backgroundColor: "white" }}>

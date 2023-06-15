@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, TextInput, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, Image, TextInput, StyleSheet,Alert } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import React, { useState, useEffect } from 'react'
 import img_dangnhap from '../../assets/dangnhap.png'
@@ -22,11 +22,11 @@ const DangNHap = ({ navigation}) => {
         data => {
           if (data.error) {
             setErrormsg(data.error);
-            alert("Có lẽ email hoặc mật khẩu chưa chính xác!");
+            Alert.alert("Thông báo","Có lẽ email hoặc mật khẩu chưa chính xác!");
           }
           else {
             SetFDaTa({ ...fdata, email: "" , password:""})
-            alert('Đăng Nhập Thành Công');
+            Alert.alert("Thông báo",'Đăng nhập hệ thống thành công');
             navigation.navigate('TrangCaNhan', { data: fdata });
           }
         }

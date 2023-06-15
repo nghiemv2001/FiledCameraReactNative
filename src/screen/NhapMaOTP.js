@@ -20,7 +20,7 @@ const NhapMaOPT = ({ navigation, route }) => {
     if (s != route.params.data.otpCode) {
       console.log(route.params.data.otpCode)
       SetFDaTa({...fdata,number1: "",number2: "",number3: "",number4: "",})
-      alert('Mã OTP không chính xác !')
+      Alert.alert("Thông báo",'Mã OTP không chính xác !')
     }
 
     else {

@@ -11,7 +11,7 @@ const QuenMatKhau = ({ navigation }) => {
   const [errormsg, setErrormsg] = useState(null);
   const NhapEmail = () => {
     if ((!(/\S+@\S+\.\S+/).test(fdata.email) && !(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im).test(fdata.email))) {
-      alert("Email người dùng chưa đúng định dạng!")
+      Alert.alert("Thông báo","Email người dùng chưa đúng định dạng!")
       return;
     } else {
       fetch(shareVarible.URLink + '/user/checkEmail', {
@@ -24,7 +24,7 @@ const QuenMatKhau = ({ navigation }) => {
         .then(res => res.json()).then(
           data => {
             if (data == "false") {
-              alert("Email không tồn tại trên hệ thống!")
+              Alert.alert("Thông báo","Email không tồn tại trên hệ thống!")
             } else {
               handleGetOtpCode()
             }

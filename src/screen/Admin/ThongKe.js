@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity , Alert} from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { Dimensions } from 'react-native';
 import {
@@ -85,7 +85,7 @@ const ThongKe = () => {
     };
     const XemKetQua = () => {
         if (month == null || year == null) {
-            alert("Bạn cần cung cấp thời gian cụ thể về tháng và năm!")
+            Alert.alert("Thông báo","Bạn cần cung cấp thời gian cụ thể về tháng và năm!")
         }
         else {
             setTrangThai(1)
@@ -105,7 +105,6 @@ const ThongKe = () => {
                         console.error(error);
                     });
             };
-
             fetchCount('/PhanAnhChuaXuLi/count/' + `${month}` + '/' + `${year}`, setChuaXuLi);
             fetchCount('/PhanAnhKhan/count/' + `${month}` + '/' + `${year}`, setKhan);
             fetchCount('/PhanAnhDangXuLi/count/' + `${month}` + '/' + `${year}`, setDangXuLi);

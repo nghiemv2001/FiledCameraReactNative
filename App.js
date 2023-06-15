@@ -31,10 +31,13 @@ export default function App() {
     <NavigationContainer>
       <AddressProvider>
         <Stack.Navigator>
-          <Stack.Screen name="TrangChuAdmin" component={TrangChuAdmin} options={{
+        <Stack.Screen name="DangNhap" component={DangNhap} options={{
             headerShown: false
           }} />
-          <Stack.Screen name="DangNhap" component={DangNhap} options={{
+          <Stack.Screen name="MatKhauMoi" component={MatKhauMoi} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="TrangChuAdmin" component={TrangChuAdmin} options={{
             headerShown: false
           }} />
           <Stack.Screen name="TrangChuNguoiDung" component={TrangChuNguoiDung} options={{
@@ -83,9 +86,7 @@ export default function App() {
           <Stack.Screen name="NhapMaOTP" component={NhapMaOPT} options={{
             headerShown: false
           }} />
-          <Stack.Screen name="MatKhauMoi" component={MatKhauMoi} options={{
-            headerShown: false
-          }} />
+          
         </Stack.Navigator>
       </AddressProvider>
     </NavigationContainer>

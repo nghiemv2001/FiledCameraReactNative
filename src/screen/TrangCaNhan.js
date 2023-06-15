@@ -28,7 +28,6 @@ const TrangCaNhan = ({ navigation, route }) => {
             .then(response => response.json())
             .then(data =>
                { SetDataAPI(data)
-            console.log(data)
             setUserId(data._id);
             setUserRole(data.role);
             }
@@ -59,12 +58,7 @@ const TrangCaNhan = ({ navigation, route }) => {
             <View style={{ width: '100%', height: "30%", marginTop: 20, flexDirection: 'row' }}>
                 <TouchableOpacity style={{ width: "25%" }}
                     onPress={() => navigation.navigate('DangNhap')}
-                >
-                    {
-                        dataAPI.image != "" ? <Image style={{ height: 60, width: 60, borderRadius: 60, marginTop: 10, marginLeft: 20, zIndex: 1 }} source={img_logout} />
-                            : <Image style={{ height: 60, width: 60, borderRadius: 60, marginTop: 10, marginLeft: 20, zIndex: 1 }} source={img_logout} />
-
-                    }
+                ><Text style={{fontSize: 18, fontStyle: 'normal', textDecorationLine: 'underline', marginLeft: 10}}>Logout</Text>
                 </TouchableOpacity>
                 <View style={{ justifyContent: 'center', alignItems: 'center', }}>
                     <Image style={{ height: 200, width: 200, borderRadius: 180 }} source={img_trangcanhan} />
